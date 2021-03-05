@@ -9,7 +9,6 @@ export default class AuthController {
     await user.load('role');
     await user.load('profile');
 
-    console.log(token.user.toJSON());
     return { token: token.toJSON().token, user: token.user.toJSON() };
   }
 

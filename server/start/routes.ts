@@ -36,6 +36,12 @@ Route.resource('carers.patients', 'CarerPatientsController').apiOnly();
 
 Route.resource('users.logs', 'PatientLogsController').apiOnly();
 
+Route.resource('neurologists', 'NeurologistsController').apiOnly();
+
+Route.resource('carers', 'CarersController').apiOnly();
+
+Route.resource('patients', 'PatientsController').apiOnly();
+
 Route.post('/login', 'AuthController.login');
 
 Route.post('/signup', 'UsersController.store');

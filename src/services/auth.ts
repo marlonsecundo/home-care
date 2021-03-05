@@ -1,18 +1,22 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { Profile, Role, RoleTypes, User } from '../types/models';
-import { RequestFailure, RequestResponse } from '../types/service';
+import { RequestResponse } from '../types/service';
 import api from './api';
 
 const signup = async (
   user: User,
   profile: Profile,
-  role: Role
+  role: Role,
+  neurologist: User,
+  carer: User
 ): Promise<RequestResponse> => {
   try {
     const result = await api.post('/signup', {
-      user,
+      user: { ...user, email: user.email.toLowerCase().replace(' ', '') },
       profile,
       role: { ...role, type: RoleTypes[role.type] },
+      neurologist,
+      carer,
     });
 
     return { ...result, type: 'AXIOS_RESPONSE' };

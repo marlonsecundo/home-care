@@ -11,7 +11,7 @@ export default class NeurologistPatients extends BaseSchema {
 
       table.integer('neurologist_id').references('users.id');
 
-      table.integer('pacient_id').references('users.id');
+      table.integer('patient_id').references('users.id');
 
       table.timestamps(true);
     });

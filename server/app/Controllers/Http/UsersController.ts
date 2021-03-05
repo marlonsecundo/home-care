@@ -1,4 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import CarerPatient from 'App/Models/CarerPatient';
+import NeurologistPatient from 'App/Models/NeurologistPatient';
 import User from 'App/Models/User';
 
 export default class UsersController {
@@ -13,6 +15,20 @@ export default class UsersController {
 
     await user.related('profile').create(requestBody.profile);
     await user.related('role').create(requestBody.role);
+
+    if (requestBody.neurologist) {
+      await NeurologistPatient.create({
+        neurologistId: requestBody.neurologist.id,
+        patientId: user.id,
+      });
+    }
+
+    if (requestBody.carer) {
+      await CarerPatient.create({
+        patientId: requestBody.carer.id,
+        carerId: user.id,
+      });
+    }
 
     return user;
   }

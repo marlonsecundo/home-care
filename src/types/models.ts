@@ -5,8 +5,10 @@ export enum RoleTypes {
 }
 
 export interface User {
-  email: String;
+  id?: number;
+  email: string;
   password: string;
+  profile?: Profile;
 }
 
 export interface Profile {

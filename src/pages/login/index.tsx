@@ -25,12 +25,13 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
 
   const onLoginButtonTap = useCallback(async (em, pass) => {
     const result = await AuthService.login(em, pass);
-    console.log(result);
     if (result.type === 'AXIOS_RESPONSE') {
-      console.log('SADasd');
-      store.update(AuthActions.authenticate(result.data.token), () => {
-        navigateByUser(result.data.user);
-      });
+      store.update(
+        AuthActions.authenticate(result.data.token, result.data.user),
+        () => {
+          navigateByUser(result.data.user);
+        }
+      );
     }
   }, []);
 

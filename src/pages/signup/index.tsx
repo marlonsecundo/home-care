@@ -13,8 +13,11 @@ import {
 import { RoleRadio } from './styles';
 import Toast from 'react-native-toast-message';
 import CollapsableContainer from '../../components/collapsable-container';
-import { RoleTypes } from '../../types/models';
 import { AuthService } from '../../services/auth';
+import NeurologistSelector from '../../components/neurologist-selector';
+import CarerSelector from '../../components/carer-selector';
+import { MarginBlockSmall } from '../../styles/layout';
+import PatientSelector from '../../components/patient-selector';
 
 const SignupScreen: React.FC = ({ navigation }: any) => {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -24,13 +27,27 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
   const [cpf, setCPF] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [neurologist, setNeurologist] = useState(null);
+  const [carer, setCarer] = useState(null);
 
   const signupButtonTap = useCallback(
-    async (email, password, name, birth, crm, cpf, roleIndex) => {
+    async (
+      email,
+      password,
+      name,
+      birth,
+      crm,
+      cpf,
+      roleIndex,
+      neurologist,
+      carer
+    ) => {
       const result = await AuthService.signup(
         { email, password },
         { name, birth, crm, cpf },
-        { type: roleIndex }
+        { type: roleIndex },
+        neurologist,
+        carer
       );
 
       if (result.type === 'AXIOS_RESPONSE') {
@@ -77,6 +94,7 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
           </RoleRadio>
           <LineDivider></LineDivider>
           <H6>Perfil</H6>
+
           <Input
             value={name}
             label="Nome"
@@ -121,9 +139,36 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
             onChangeText={setPassword}
             secureTextEntry={true}
           />
+          <CollapsableContainer visible={roleIndex === 2}>
+            <>
+              <LineDivider></LineDivider>
+              <NeurologistSelector
+                onNeurologistSelected={(item) => {
+                  setNeurologist(item.value);
+                }}
+              ></NeurologistSelector>
+              <MarginBlockSmall></MarginBlockSmall>
+              <CarerSelector
+                onCarerSelected={(item) => {
+                  setCarer(item.value);
+                }}
+              ></CarerSelector>
+            </>
+          </CollapsableContainer>
+
           <BottomButton
             onPress={() =>
-              signupButtonTap(email, password, name, birth, crm, cpf, roleIndex)
+              signupButtonTap(
+                email,
+                password,
+                name,
+                birth,
+                crm,
+                cpf,
+                roleIndex,
+                neurologist,
+                carer
+              )
             }
           >
             Cadastrar

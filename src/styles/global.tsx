@@ -10,6 +10,12 @@ import {
 } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+export const P1 = styled(Text).attrs(() => ({
+  category: 'p1',
+}))`
+  margin: 0 0 0 0;
+`;
+
 export const H2 = styled(Text).attrs(() => ({
   category: 'h2',
 }))`
@@ -41,4 +47,9 @@ export const Root = styled(Layout)`
   flex: 1;
 `;
 
+export const WrapContainer = styled(Layout)`
+  flex: 1;
+  flex-flow: row wrap;
+  justify-content: space-between;
+`;
 // export const StyledScrollView = styled(Scroll)

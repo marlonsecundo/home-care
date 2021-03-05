@@ -1,10 +1,12 @@
-import { Layout, Text } from '@ui-kitten/components';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+import CardButton from '../../components/card-button';
 import AuthRoute from '../../routes/auth-route';
-import { Root, SafeArea, H2 } from '../../styles/global';
+import store from '../../store';
+import { Root, SafeArea, H2, WrapContainer } from '../../styles/global';
 
 interface _Props {
-  navigation: any;
+  navigation: StackNavigationProp<any>;
 }
 const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
   return (
@@ -12,6 +14,12 @@ const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
       <Root>
         <SafeArea>
           <H2>Neurologista</H2>
+          <WrapContainer>
+            <CardButton
+              onPress={() => navigation.navigate('neurologist-patients')}
+              text="Pacientes"
+            ></CardButton>
+          </WrapContainer>
         </SafeArea>
       </Root>
     </AuthRoute>
