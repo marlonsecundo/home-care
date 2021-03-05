@@ -6,9 +6,9 @@ export default class PatientLogs extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
-      table.json('data');
+      table.float('data');
       table.enu('type', ['OXYGENATION', 'HEARTBEAT', 'ULTRASOUND']);
-      table.dateTime('date');
+      table.enu('status', ['LOW', 'MODERATE', 'SEVERE']);
       table.integer('user_id').references('users.id');
       table.timestamps(true);
     });

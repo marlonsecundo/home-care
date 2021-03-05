@@ -6,16 +6,16 @@ export default class PatientLog extends BaseModel {
   public id: number;
 
   @column()
-  public data: JSON;
+  public data: number;
 
   @column()
   public type: string;
 
   @column()
-  public date: DateTime;
+  public userId: number;
 
   @column()
-  public userId: number;
+  public status: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
