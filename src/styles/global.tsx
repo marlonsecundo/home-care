@@ -22,6 +22,13 @@ export const H2 = styled(Text).attrs(() => ({
   margin: 0 0 15px 0;
 `;
 
+export const Label = styled(Text).attrs(() => ({
+  category: 'label',
+  appearance: 'hint',
+}))`
+  margin: 0px;
+`;
+
 export const H6 = styled(Text).attrs(() => ({
   category: 'h6',
 }))`

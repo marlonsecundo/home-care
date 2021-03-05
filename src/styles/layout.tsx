@@ -14,13 +14,18 @@ export const ColumnContainer = styled(Layout)`
 
 interface RowContainerProps {
   justifyContent?: string;
+  flex?: number;
+  alignItems?: string;
 }
 
 export const RowContainer = styled(Layout)<RowContainerProps>`
   flex-flow: row;
-  flex: 1;
+  ${(props) => (props.flex ? `flex: ${props.flex}` : '')};
   ${(props) =>
-    props.justifyContent ? `justify-content: ${props.justifyContent}` : ''}
+    props.justifyContent ? `justify-content: ${props.justifyContent}` : ''};
+
+  ${(props) =>
+    props.justifyContent ? `align-items: ${props.alignItems}` : ''};
 `;
 
 export const MarginBlockSmall = styled(Layout)`

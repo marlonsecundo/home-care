@@ -7,6 +7,7 @@ import AuthRoute from '../../routes/auth-route';
 import { NeurologistService } from '../../services/neurologists';
 import store from '../../store';
 import { H2, Root, SafeArea } from '../../styles/global';
+import { MarginBlockSmall } from '../../styles/layout';
 import { User } from '../../types/models';
 
 interface Props {
@@ -37,6 +38,7 @@ const NeurologistPatientsScreen: React.FC<Props> = ({ navigation }) => {
           <LazyComponent loading={patients === null}>
             <H2>Pacientes</H2>
             <List data={patients} renderItem={renderItem} />
+            <MarginBlockSmall></MarginBlockSmall>
           </LazyComponent>
         </SafeArea>
       </Root>

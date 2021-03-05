@@ -9,6 +9,8 @@ export interface User {
   email: string;
   password: string;
   profile?: Profile;
+
+  role?: Role;
 }
 
 export interface Profile {

@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import store from '../store';
 
 interface _Props {
   navigation: any;
 }
 const AuthRoute: React.FC<_Props> = ({ children, navigation }) => {
-  const auth = store.useState((s) => s.token !== null);
+  const authenticated = store.useState((s) => s.token !== null);
 
   useEffect(() => {
-    if (!auth) {
+    if (!authenticated) {
       navigation.reset({
         index: 1,
         routes: [{ name: 'home' }],
       });
     }
-  }, [auth]);
+  }, [authenticated]);
 
-  return auth ? <>{children}</> : <></>;
+  return authenticated ? <>{children}</> : <></>;
 };
 
 export default AuthRoute;

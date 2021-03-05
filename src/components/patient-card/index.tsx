@@ -1,6 +1,11 @@
+import { Icon } from '@ui-kitten/components';
 import React from 'react';
-import { P1 } from '../../styles/global';
-import { ColumnContainer, RowContainer } from '../../styles/layout';
+import { Label, P1 } from '../../styles/global';
+import {
+  ColumnContainer,
+  MarginBlockSmall,
+  RowContainer,
+} from '../../styles/layout';
 import { User } from '../../types/models';
 import { _PatientIcon, _StyledCard } from './styles';
 
@@ -11,10 +16,16 @@ interface _Props {
 const PatientCard: React.FC<_Props> = ({ patient }) => {
   return (
     <_StyledCard>
-      <RowContainer>
-        <_PatientIcon></_PatientIcon>
+      <RowContainer alignItems="center">
         <ColumnContainer>
+          <Label>Nome</Label>
           <P1>{patient.profile?.name}</P1>
+          <MarginBlockSmall></MarginBlockSmall>
+
+          <RowContainer flex={1} justifyContent="space-between">
+            <Label>CPF</Label>
+            <Label>Nascimento</Label>
+          </RowContainer>
           <RowContainer justifyContent="space-between">
             <P1>{patient.profile?.cpf}</P1>
             <P1>{patient.profile?.birth}</P1>
