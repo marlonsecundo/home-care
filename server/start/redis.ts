@@ -25,8 +25,12 @@ patientLog.process(async (job) => {
 
   const promisses = patients.map(async (patient) => {
     try {
-      await PatientLogFactory.apply('OXYGENATION').merge({ userId: patient.id }).create();
-      await PatientLogFactory.apply('HEARTBEAT').merge({ userId: patient.id }).create();
+      await PatientLogFactory.apply('OXYGENATION')
+        .merge({ userId: patient.id, type: 'OXYGENATION' })
+        .create();
+      await PatientLogFactory.apply('HEARTBEAT')
+        .merge({ userId: patient.id, type: 'HEARTBEAT' })
+        .create();
     } catch (e) {
       console.log(e);
     }
