@@ -1,22 +1,28 @@
 import { io, Socket } from 'socket.io-client';
 
-export const OXIGENTATION_SOCKET_URL = 'new:oxygenation-log';
-export const HEARTBEAT_SOCKET_URL = 'new:heartbeat-log';
+export const OXIGENTATION_SOCKET_URL = 'new:oxygenation-log:';
+export const HEARTBEAT_SOCKET_URL = 'new:heartbeat-log:';
 
-const SocketService = () => {
-  let socketIo: Socket | null = io();
-  let isReady = false;
-  const connect = () => {
-    socketIo = io('http://192.168.0.8:3333/', {
-      transports: ['websocket'],
+class SocketService {
+  public isReady = false;
+  public socketIo: Socket = io();
+
+  public connect = () =>
+    new Promise<boolean>((resolve, reject) => {
+      if (this.isReady) {
+        resolve(this.isReady);
+        return;
+      }
+
+      this.socketIo = io('http://192.168.0.8:3333/', {
+        transports: ['websocket'],
+      });
+
+      this.socketIo.on('connect', (socket: any) => {
+        this.isReady = true;
+        resolve(this.isReady);
+      });
     });
+}
 
-    socketIo.on('connect', (socket: any) => {
-      isReady = true;
-    });
-  };
-
-  return { connect, isReady, socketIo };
-};
-
-export default SocketService();
+export default new SocketService();

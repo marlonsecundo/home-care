@@ -7,18 +7,18 @@ export const Center = styled(Layout)`
   justify-content: center;
 `;
 
-export const ColumnContainer = styled(Layout)`
-  flex-flow: column;
-  flex: 1;
-`;
-
-interface RowContainerProps {
+interface ContainerProps {
   justifyContent?: string;
   flex?: number;
   alignItems?: string;
 }
 
-export const RowContainer = styled(Layout)<RowContainerProps>`
+export const ColumnContainer = styled(Layout)<ContainerProps>`
+  flex-flow: column;
+  ${(props) => (props.flex ? `flex: ${props.flex}` : '')};
+`;
+
+export const RowContainer = styled(Layout)<ContainerProps>`
   flex-flow: row;
   ${(props) => (props.flex ? `flex: ${props.flex}` : '')};
   ${(props) =>
@@ -30,4 +30,12 @@ export const RowContainer = styled(Layout)<RowContainerProps>`
 
 export const MarginBlockSmall = styled(Layout)`
   margin: 4px;
+`;
+
+interface PaddingProps {
+  padding?: string;
+}
+
+export const Padding = styled(Layout)<PaddingProps>`
+  ${(props) => (props.padding ? `padding: ${props.padding}` : '')};
 `;

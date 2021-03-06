@@ -3,10 +3,9 @@ import Ws from 'App/Services/Ws';
 
 export default class PatientLog {
   public async handleNewOxigenation(log: EventsList['new:oxygenation-log']) {
-    Ws.io.emit('new:oxygenation-log', log);
+    Ws.io.emit('new:oxygenation-log:' + log.userId, log);
   }
-
   public async handleNewHeartbeat(log: EventsList['new:heartbeat-log']) {
-    Ws.io.emit('new:heartbeat-log', log);
+    Ws.io.emit('new:heartbeat-log:' + log.userId, log);
   }
 }

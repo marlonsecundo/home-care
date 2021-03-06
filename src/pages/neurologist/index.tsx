@@ -13,7 +13,7 @@ interface _Props {
 }
 const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
   return (
-    <AuthRoute navigation={navigation}>
+    <AuthRoute>
       <Root>
         <SafeArea>
           <RowContainer justifyContent="space-between">

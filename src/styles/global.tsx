@@ -29,6 +29,12 @@ export const Label = styled(Text).attrs(() => ({
   margin: 0px;
 `;
 
+export const H4 = styled(Text).attrs(() => ({
+  category: 'h4',
+}))`
+  margin: 0 0 5px 0;
+`;
+
 export const H6 = styled(Text).attrs(() => ({
   category: 'h6',
 }))`

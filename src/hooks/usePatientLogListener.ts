@@ -5,7 +5,10 @@ import socketService, {
 } from '../services/socket.service';
 import { PatientLog, PatientLogType, Status } from '../types/models';
 
-function usePatientLogListener(type: PatientLogType): PatientLog {
+function usePatientLogListener(
+  type: PatientLogType,
+  userId: number
+): PatientLog {
   const [patientLog, setPatientLog] = useState<PatientLog>({
     data: 0,
     status: Status.NONE,
@@ -22,14 +25,14 @@ function usePatientLogListener(type: PatientLogType): PatientLog {
       url = HEARTBEAT_SOCKET_URL;
     }
 
-    if (!socketService.isReady) socketService.connect();
-
-    socketService.socketIo.on(url, (socketData: any) => {
-      setPatientLog({
-        data: socketData.data,
-        type: (<any>PatientLogType)[socketData.type],
-        status: (<any>Status)[socketData.status],
-        userId: socketData.userId,
+    socketService.connect().then(() => {
+      socketService.socketIo.on(url + userId, (socketData: any) => {
+        setPatientLog({
+          data: socketData.data,
+          type: (<any>PatientLogType)[socketData.type],
+          status: (<any>Status)[socketData.status],
+          userId: socketData.userId,
+        });
       });
     });
   }, []);

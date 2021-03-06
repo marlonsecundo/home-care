@@ -3,6 +3,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 import React from 'react';
 import { View } from 'react-native';
+import PatientLogCard from '../../components/patient-log-card';
+import usePatientLogListener from '../../hooks/usePatientLogListener';
 import AuthRoute from '../../routes/auth-route';
 import {
   H2,
@@ -17,12 +19,22 @@ import {
   MarginBlockSmall,
   RowContainer,
 } from '../../styles/layout';
-import { User } from '../../types/models';
+import { PatientLogType, User } from '../../types/models';
 
 interface Props {}
 const PatientScreen: React.FC<Props> = () => {
   const route = useRoute<RouteProp<{ user: User }, 'user'>>();
   const patient = route.params;
+
+  const patientOxiLog = usePatientLogListener(
+    PatientLogType.OXYGENATION,
+    patient.id ?? -1
+  );
+
+  const patientHeartLog = usePatientLogListener(
+    PatientLogType.HEARTBEAT,
+    patient.id ?? -1
+  );
 
   return (
     <AuthRoute>
@@ -47,6 +59,8 @@ const PatientScreen: React.FC<Props> = () => {
             </RowContainer>
 
             <LineDivider></LineDivider>
+            <PatientLogCard patientLog={patientOxiLog}></PatientLogCard>
+            <PatientLogCard patientLog={patientHeartLog}></PatientLogCard>
           </ColumnContainer>
         </SafeArea>
       </Root>
