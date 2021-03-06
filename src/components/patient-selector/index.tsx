@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LazyComponent from '../../hoc/lazy-component';
-import { PatientService } from '../../services/patient.service';
+import PatientService from '../../services/patient.service';
 import { User } from '../../types/models';
 import Selector, { SelectorItem } from '../selector';
 
@@ -16,7 +16,7 @@ const PatientSelector: React.FC<Props> = ({ onPatientSelected }) => {
   ]);
 
   useEffect(() => {
-    PatientService.fetchPatients().then((result) => {
+    PatientService.fetchPatients().then((result: any) => {
       if (result !== null) {
         setPatients(result);
       }

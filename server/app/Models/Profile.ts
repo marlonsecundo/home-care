@@ -18,6 +18,12 @@ export default class Profile extends BaseModel {
   public birth: DateTime;
 
   @column()
+  public condition: number;
+
+  @column()
+  public intervention: boolean;
+
+  @column()
   public userId: number;
 
   @column.dateTime({ autoCreate: true })

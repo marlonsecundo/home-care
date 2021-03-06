@@ -31,6 +31,8 @@ export interface Profile {
   cpf: string;
   crm: string;
   birth: string;
+  intervention: boolean;
+  condition: number;
 }
 
 export interface Role {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import LazyComponent from '../../hoc/lazy-component';
-import { NeurologistService } from '../../services/neurologists';
+import NeurologistService from '../../services/neurologist.service';
 import { P1 } from '../../styles/global';
 import { ColumnContainer } from '../../styles/layout';
 import { User } from '../../types/models';

@@ -33,21 +33,28 @@ const signup = async (
 const login = async (
   email: string,
   password: string
-): Promise<RequestResponse> => {
+): Promise<{ user: User; token: string } | null> => {
   try {
     const result = await api.post('/login', {
       email: email.toLowerCase().replace(' ', ''),
       password,
     });
 
-    return { ...result, type: 'AXIOS_RESPONSE' };
+    const formattedResult = {
+      token: result.data.token,
+      user: {
+        ...result.data.user,
+        role: {
+          type: (<any>RoleTypes)[result.data.user.role.type],
+        },
+      },
+    };
+
+    return formattedResult;
   } catch (e) {
     const error = e as AxiosError;
-    return {
-      code: error.code,
-      message: error.message,
-      type: 'REQUEST_FAILURE',
-    };
+
+    return null;
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import socketService, {
   HEARTBEAT_SOCKET_URL,
   OXIGENTATION_SOCKET_URL,
@@ -16,6 +16,15 @@ function usePatientLogListener(
     userId: 0,
   });
 
+  const onReceiveData = useCallback((socketData: any) => {
+    setPatientLog({
+      data: socketData.data,
+      type: (<any>PatientLogType)[socketData.type],
+      status: (<any>Status)[socketData.status],
+      userId: socketData.userId,
+    });
+  }, []);
+
   useEffect(() => {
     let url = '';
 
@@ -26,15 +35,13 @@ function usePatientLogListener(
     }
 
     socketService.connect().then(() => {
-      socketService.socketIo.on(url + userId, (socketData: any) => {
-        setPatientLog({
-          data: socketData.data,
-          type: (<any>PatientLogType)[socketData.type],
-          status: (<any>Status)[socketData.status],
-          userId: socketData.userId,
-        });
-      });
+      socketService.socketIo.on(url + userId, onReceiveData);
     });
+
+    // Dispose
+    return () => {
+      socketService.socketIo.off(url + userId, onReceiveData);
+    };
   }, []);
 
   return patientLog;

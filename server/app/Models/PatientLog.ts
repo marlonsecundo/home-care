@@ -17,6 +17,9 @@ export default class PatientLog extends BaseModel {
   @column()
   public status: string;
 
+  @column()
+  public condition: number;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 

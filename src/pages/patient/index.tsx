@@ -1,8 +1,9 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Layout } from '@ui-kitten/components';
+import { Button, Layout } from '@ui-kitten/components';
 import React from 'react';
 import { View } from 'react-native';
+import InterventionSection from '../../components/intervention-section';
 import PatientLogCard from '../../components/patient-log-card';
 import usePatientLogListener from '../../hooks/usePatientLogListener';
 import AuthRoute from '../../routes/auth-route';
@@ -46,9 +47,7 @@ const PatientScreen: React.FC<Props> = () => {
             <LineDivider></LineDivider>
             <Label>Nome</Label>
             <P1>{patient.profile?.name}</P1>
-
             <MarginBlockSmall></MarginBlockSmall>
-
             <RowContainer justifyContent="space-between">
               <Label>CPF</Label>
               <Label>Nascimento</Label>
@@ -57,10 +56,11 @@ const PatientScreen: React.FC<Props> = () => {
               <P1>{patient.profile?.cpf}</P1>
               <P1>{patient.profile?.birth}</P1>
             </RowContainer>
-
             <LineDivider></LineDivider>
             <PatientLogCard patientLog={patientOxiLog}></PatientLogCard>
             <PatientLogCard patientLog={patientHeartLog}></PatientLogCard>
+            <LineDivider></LineDivider>
+            <InterventionSection patient={patient}></InterventionSection>
           </ColumnContainer>
         </SafeArea>
       </Root>

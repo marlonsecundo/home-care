@@ -28,8 +28,6 @@ Route.resource('users', 'UsersController').apiOnly();
 
 Route.resource('roles', 'RolesController').apiOnly();
 
-Route.resource('profiles', 'ProfilesController').apiOnly();
-
 Route.resource('neurologists.patients', 'NeurologistPatientsController').apiOnly();
 
 Route.resource('carers.patients', 'CarerPatientsController').apiOnly();

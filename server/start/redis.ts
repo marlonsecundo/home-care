@@ -27,11 +27,11 @@ patientLog.process(async (job) => {
   const promisses = patients.map(async (patient) => {
     try {
       const oxiLog = await PatientLogFactory.apply('OXYGENATION')
-        .merge({ userId: patient.id, type: 'OXYGENATION' })
+        .merge({ userId: patient.id, type: 'OXYGENATION', condition: patient.profile.condition })
         .create();
 
       const heartLog = await PatientLogFactory.apply('HEARTBEAT')
-        .merge({ userId: patient.id, type: 'HEARTBEAT' })
+        .merge({ userId: patient.id, type: 'HEARTBEAT', condition: patient.profile.condition })
         .create();
 
       Event.emit('new:oxygenation-log', oxiLog);

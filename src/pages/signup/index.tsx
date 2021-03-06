@@ -18,10 +18,13 @@ import NeurologistSelector from '../../components/neurologist-selector';
 import CarerSelector from '../../components/carer-selector';
 import { ColumnContainer, MarginBlockSmall } from '../../styles/layout';
 import PatientSelector from '../../components/patient-selector';
+import ConditionSelector from '../../components/condition-selector';
 
 const SignupScreen: React.FC = ({ navigation }: any) => {
   const [roleIndex, setRoleIndex] = useState(0);
   const [name, setName] = useState('');
+  const [condition, setCondition] = useState(4);
+
   const [birth, setBirth] = useState('');
   const [crm, setCRM] = useState('');
   const [cpf, setCPF] = useState('');
@@ -40,11 +43,12 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
       cpf,
       roleIndex,
       neurologist,
-      carer
+      carer,
+      condition
     ) => {
       const result = await AuthService.signup(
         { email, password },
-        { name, birth, crm, cpf },
+        { name, birth, crm, cpf, condition, intervention: false },
         { type: roleIndex },
         neurologist,
         carer
@@ -158,6 +162,15 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
               ></CarerSelector>
             </CollapsableContainer>
 
+            <CollapsableContainer visible={roleIndex === 2}>
+              <MarginBlockSmall></MarginBlockSmall>
+              <ConditionSelector
+                onConditionSelected={(item) => {
+                  setCondition(item.value);
+                }}
+              ></ConditionSelector>
+            </CollapsableContainer>
+
             <BottomButton
               onPress={() =>
                 signupButtonTap(
@@ -169,7 +182,8 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
                   cpf,
                   roleIndex,
                   neurologist,
-                  carer
+                  carer,
+                  condition
                 )
               }
             >

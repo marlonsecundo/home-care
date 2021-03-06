@@ -28,7 +28,23 @@ export default class NeurologistPatientsController {
 
   public async show({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update({ request }: HttpContextContract) {
+    const { neurologist_id: neurologistId, id: patientId } = request.params();
+    const requestBody = request.all();
+
+    const result = await NeurologistPatient.findBy('patient_id', patientId);
+
+    await result!.preload('patient', (query) => {
+      query.preload('profile');
+    });
+
+    const patientProfile = result!.patient.profile;
+
+    patientProfile.intervention = requestBody.intervention;
+    await patientProfile.save();
+
+    return result!.patient;
+  }
 
   public async destroy({}: HttpContextContract) {}
 }

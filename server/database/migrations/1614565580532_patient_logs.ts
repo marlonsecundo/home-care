@@ -10,6 +10,8 @@ export default class PatientLogs extends BaseSchema {
       table.enu('type', ['OXYGENATION', 'HEARTBEAT', 'ULTRASOUND']);
       table.enu('status', ['LOW', 'MODERATE', 'SEVERE']);
       table.integer('user_id').references('users.id');
+      // Coluna para facilitar a geração de logs
+      table.integer('condition');
       table.timestamps(true);
     });
   }

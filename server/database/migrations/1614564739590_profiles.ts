@@ -10,7 +10,9 @@ export default class Profiles extends BaseSchema {
       table.string('cpf');
       table.string('crm');
       table.dateTime('birth');
+      table.boolean('intervention').defaultTo(false);
       table.integer('user_id').references('users.id');
+      table.integer('condition');
       table.timestamps(true);
     });
   }

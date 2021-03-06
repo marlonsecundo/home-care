@@ -7,8 +7,6 @@ export default class NeurologistPatients extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
 
-      table.boolean('intervention').defaultTo(false);
-
       table.integer('neurologist_id').references('users.id');
 
       table.integer('patient_id').references('users.id');

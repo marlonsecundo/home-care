@@ -15,8 +15,8 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
   const authenticated = store.useState((s) => s.token !== null);
   const user = store.useState((s) => s.user);
 
-  const navigateByUser = useCallback((user: any) => {
-    if (user.role.type === RoleTypes[RoleTypes.NEUROLOGIST]) {
+  const navigateByUser = useCallback((user: User) => {
+    if (user.role?.type === RoleTypes.NEUROLOGIST) {
       navigation.reset({
         index: 1,
         routes: [{ name: 'neurologist' }],
@@ -26,10 +26,10 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
 
   const onLoginButtonTap = useCallback(async (em, pass) => {
     const result = await AuthService.login(em, pass);
-    if (result.type === 'AXIOS_RESPONSE') {
-      store.update(
-        AuthActions.authenticate(result.data.token, result.data.user)
-      );
+
+    console.log(result);
+    if (result !== null) {
+      store.update(AuthActions.authenticate(result.token, result.user));
     }
   }, []);
 
