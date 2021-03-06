@@ -11,11 +11,12 @@ import { _PatientIcon, _StyledCard } from './styles';
 
 interface _Props {
   patient: User;
+  onTap: () => void;
 }
 
-const PatientCard: React.FC<_Props> = ({ patient }) => {
+const PatientCard: React.FC<_Props> = ({ patient, onTap }) => {
   return (
-    <_StyledCard>
+    <_StyledCard onPress={onTap}>
       <RowContainer alignItems="center">
         <ColumnContainer>
           <Label>Nome</Label>

@@ -4,6 +4,19 @@ export enum RoleTypes {
   PATIENT,
 }
 
+export enum Status {
+  LOW = 'Baixo',
+  MODERATE = 'Moderado',
+  SEVERE = 'Servero',
+  NONE = 'Vazio',
+}
+
+export enum PatientLogType {
+  OXYGENATION,
+  HEARTBEAT,
+  NONE,
+}
+
 export interface User {
   id?: number;
   email: string;
@@ -22,4 +35,11 @@ export interface Profile {
 
 export interface Role {
   type: RoleTypes;
+}
+
+export interface PatientLog {
+  data: number;
+  type: PatientLogType;
+  status: Status;
+  userId: number;
 }

@@ -19,16 +19,26 @@ const NeurologistPatientsScreen: React.FC<Props> = ({ navigation }) => {
 
   const [patients, setPatients] = useState<User[]>();
 
+  const onTapPatientCard = (patient: User) => {
+    navigation.navigate('patient', patient);
+  };
+
+  const renderItem = useCallback((data) => {
+    return (
+      <PatientCard
+        onTap={() => onTapPatientCard(data.item)}
+        key={data.item.id}
+        patient={data.item}
+      ></PatientCard>
+    );
+  }, []);
+
   useEffect(() => {
     NeurologistService.fetchPatients(neurologist).then((result) => {
       if (result !== null) {
         setPatients(result);
       }
     });
-  }, []);
-
-  const renderItem = useCallback((data) => {
-    return <PatientCard patient={data.item}></PatientCard>;
   }, []);
 
   return (

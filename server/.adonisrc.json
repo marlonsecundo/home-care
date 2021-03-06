@@ -16,11 +16,10 @@
   "preloads": [
     "./start/routes",
     "./start/kernel",
+    "./start/events",
     {
       "file": "./start/redis",
-      "environment": [
-        "web"
-      ]
+      "environment": ["web"]
     }
   ],
   "providers": [
@@ -30,7 +29,5 @@
     "@adonisjs/auth",
     "@adonisjs/redis"
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ]
+  "aceProviders": ["@adonisjs/repl"]
 }

@@ -5,6 +5,8 @@
  * file.
  */
 
+import PatientLog from 'App/Models/PatientLog';
+
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -25,5 +27,8 @@ declare module '@ioc:Adonis/Core/Event' {
   | an instance of the the UserModel only.
   |
   */
-  interface EventsList {}
+  interface EventsList {
+    'new:oxygenation-log': PatientLog;
+    'new:heartbeat-log': PatientLog;
+  }
 }

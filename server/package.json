@@ -29,12 +29,14 @@
     "@adonisjs/lucid": "^10.0.0",
     "@adonisjs/redis": "^5.0.9",
     "@adonisjs/repl": "^1.0.0",
+    "@types/socket.io": "^2.1.13",
     "bull": "^3.20.1",
     "luxon": "^1.26.0",
     "phc-argon2": "^1.1.0",
     "phc-bcrypt": "^1.0.5",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
+    "socket.io": "^3.1.2",
     "source-map-support": "^0.5.19",
     "sqlite3": "^5.0.2"
   }

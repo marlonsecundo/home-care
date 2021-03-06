@@ -1,4 +1,5 @@
 import User from 'App/Models/User';
+import Event from '@ioc:Adonis/Core/Event';
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,16 @@ patientLog.process(async (job) => {
 
   const promisses = patients.map(async (patient) => {
     try {
-      await PatientLogFactory.apply('OXYGENATION')
+      const oxiLog = await PatientLogFactory.apply('OXYGENATION')
         .merge({ userId: patient.id, type: 'OXYGENATION' })
         .create();
-      await PatientLogFactory.apply('HEARTBEAT')
+
+      const heartLog = await PatientLogFactory.apply('HEARTBEAT')
         .merge({ userId: patient.id, type: 'HEARTBEAT' })
         .create();
+
+      Event.emit('new:oxygenation-log', oxiLog);
+      Event.emit('new:heartbeat-log', heartLog);
     } catch (e) {
       console.log(e);
     }
