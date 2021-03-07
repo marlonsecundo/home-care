@@ -164,7 +164,7 @@ yarn start
 <br/>
 <br/>
 
-### 😷 Caregivers
+### 👨 Caregivers
 
 | Email       | Password |
 | ----------- | -------- |
