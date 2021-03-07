@@ -22,11 +22,16 @@ import {
 } from '../../styles/layout';
 import { PatientLogType, User } from '../../types/models';
 
+import StringMask from 'string-mask';
+
+const cpfFormatter = new StringMask('000.000.000-00');
+
 interface Props {}
 const PatientScreen: React.FC<Props> = () => {
   const user = store.useState((s) => s.user);
   const route = useRoute<RouteProp<{ user: User }, 'user'>>();
   const patient = route.params;
+  const cpfDisplay = cpfFormatter.apply(patient.profile?.cpf);
 
   const patientOxiLog = usePatientLogListener(
     PatientLogType.OXYGENATION,
@@ -62,7 +67,7 @@ const PatientScreen: React.FC<Props> = () => {
               <Label>Nascimento</Label>
             </RowContainer>
             <RowContainer justifyContent="space-between">
-              <P1>{patient.profile?.cpf}</P1>
+              <P1>{cpfDisplay}</P1>
               <P1>{patient.profile?.birth}</P1>
             </RowContainer>
             <LineDivider></LineDivider>
