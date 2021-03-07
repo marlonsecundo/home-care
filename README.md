@@ -181,3 +181,20 @@ yarn start
 | Email       | Password |
 | ----------- | -------- |
 | n1@homecare | teste123 |
+
+<br/>
+<br/>
+
+## Screens
+
+---
+
+![alt text](https://github.com/marlonsecundo/home-care/blob/master/github-assets/home.png?raw=true)
+
+![alt text](https://github.com/marlonsecundo/home-care/blob/master/github-assets/login.png?raw=true)
+
+![alt text](https://github.com/marlonsecundo/home-care/blob/master/github-assets/cadastro.png?raw=true)
+
+![alt text](https://github.com/marlonsecundo/home-care/blob/master/github-assets/patients.png?raw=true)
+
+![alt text](https://github.com/marlonsecundo/home-care/blob/master/github-assets/patient-view.png?raw=true)
