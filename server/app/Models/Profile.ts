@@ -15,7 +15,7 @@ export default class Profile extends BaseModel {
   public crm: String;
 
   @column()
-  public birth: DateTime;
+  public birth: string;
 
   @column()
   public condition: number;

@@ -7,9 +7,6 @@ export default class NeurologistPatient extends BaseModel {
   public id: number;
 
   @column()
-  public intervention: boolean;
-
-  @column()
   public neurologistId: number;
 
   @column()

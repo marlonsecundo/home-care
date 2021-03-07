@@ -1,5 +1,11 @@
 import Factory from '@ioc:Adonis/Lucid/Factory';
+import CarerPatient from 'App/Models/CarerPatient';
+import NeurologistPatient from 'App/Models/NeurologistPatient';
 import PatientLog from 'App/Models/PatientLog';
+import Profile from 'App/Models/Profile';
+import Role from 'App/Models/Role';
+import User from 'App/Models/User';
+import { DateTime } from 'luxon';
 
 export const PatientLogFactory = Factory.define(PatientLog, ({ faker }) => {
   const type = faker.random.arrayElement(['OXYGENATION', 'HEARTBEAT']);
@@ -53,3 +59,51 @@ export const PatientLogFactory = Factory.define(PatientLog, ({ faker }) => {
     log.data = data;
   })
   .build();
+
+export const RoleFactory = Factory.define(Role, ({ faker }) => {
+  return {
+    type: faker.random.arrayElement(['CARER', 'NEUROLOGIST', 'PATIENT']),
+    userId: faker.random.number(),
+  };
+}).build();
+
+export const ProfileFactory = Factory.define(Profile, ({ faker }) => {
+  faker.setLocale('pt_BR');
+  return {
+    birth: faker.date.past(faker.random.number({ min: 20, max: 70 })).toLocaleDateString(['pt-br']),
+    cpf: faker.helpers
+      .shuffle(faker.random.number({ min: 10000000000, max: 99999999999 }).toString().split(''))
+      .join(''),
+    crm: faker.helpers
+      .shuffle(faker.random.number({ min: 10000, max: 99999 }).toString().split(''))
+      .join(''),
+    name: faker.name.findName(),
+    intervention: false,
+    condition: faker.random.number({ min: 0, max: 4 }),
+    userId: faker.random.number(),
+  };
+}).build();
+
+export const UserFactory = Factory.define(User, ({ faker }) => {
+  return {
+    email: 'carlos@outlook.com',
+    password: 'teste123',
+  };
+})
+  .relation('profile', () => ProfileFactory)
+  .relation('role', () => RoleFactory)
+  .build();
+
+export const NeurologistPatientFactory = Factory.define(NeurologistPatient, ({ faker }) => {
+  return {
+    neurologistId: faker.random.number(),
+    patientId: faker.random.number(),
+  };
+}).build();
+
+export const CarerPatientFactory = Factory.define(CarerPatient, ({ faker }) => {
+  return {
+    carerId: faker.random.number(),
+    patientId: faker.random.number(),
+  };
+}).build();
