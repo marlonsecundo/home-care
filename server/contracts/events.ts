@@ -6,7 +6,7 @@
  */
 
 import PatientLog from 'App/Models/PatientLog';
-
+import Profile from 'App/Models/Profile';
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -30,5 +30,6 @@ declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
     'new:oxygenation-log': PatientLog;
     'new:heartbeat-log': PatientLog;
+    'edit:intervention': Profile;
   }
 }

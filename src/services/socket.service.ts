@@ -2,7 +2,7 @@ import { io, Socket } from 'socket.io-client';
 
 export const OXIGENTATION_SOCKET_URL = 'new:oxygenation-log:';
 export const HEARTBEAT_SOCKET_URL = 'new:heartbeat-log:';
-
+export const INTERVENTION_SOCKET_URL = 'edit:intervention:';
 class SocketService {
   public isReady = false;
   public socketIo: Socket = io();

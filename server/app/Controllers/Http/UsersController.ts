@@ -25,8 +25,8 @@ export default class UsersController {
 
     if (requestBody.carer) {
       await CarerPatient.create({
-        patientId: requestBody.carer.id,
-        carerId: user.id,
+        patientId: user.id,
+        carerId: requestBody.carer.id,
       });
     }
 

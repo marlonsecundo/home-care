@@ -5,58 +5,75 @@ import store from '../../store';
 import { PatientLog, RoleTypes, User } from '../../types/models';
 
 import NeurologistService from '../../services/neurologist.service';
+import {
+  ColumnContainer,
+  MarginBlockSmall,
+  Padding,
+  RowContainer,
+} from '../../styles/layout';
+import { H6 } from '../../styles/global';
+import LazyComponent from '../../hoc/lazy-component';
+import useInterventionListener from '../../hooks/useInterventionListener';
 
 interface Props {
   patient: User;
 }
 
-const NeurologistButton: React.FC<Props> = ({ patient }) => {
-  const user = store.useState((s) => s.user);
+const InterventionButton: React.FC<Props> = ({ patient }) => {
+  const [loading, setLoading] = useState(false);
 
-  const [intervention, setIntervention] = useState(
-    patient.profile?.intervention
+  const intervention = useInterventionListener(
+    patient.profile?.intervention ?? false,
+    patient.id ?? -1
   );
 
   const requestIntervention = () => {
-    setIntervention(true);
+    setLoading(true);
 
-    NeurologistService.updateIntervention(user, patient, true);
+    NeurologistService.updateIntervention(patient, true).then((result) => {
+      setLoading(false);
+    });
   };
-
-  return (
-    <Button onPress={requestIntervention} disabled={intervention}>
-      {!intervention ? 'Requisitar Intervenção' : 'Resquitado!'}
-    </Button>
-  );
-};
-
-const CarerButton: React.FC<Props> = ({ patient }) => {
-  const user = store.useState((s) => s.user);
-
-  const [intervention, setIntervention] = useState(
-    patient.profile?.intervention
-  );
 
   const completeIntervention = () => {
-    setIntervention(false);
+    setLoading(true);
 
-    NeurologistService.updateIntervention(user, patient, false);
+    NeurologistService.updateIntervention(patient, false).then((result) => {
+      setLoading(false);
+    });
   };
 
   return (
-    <Button onPress={completeIntervention} disabled={!intervention}>
-      {intervention ? 'Finalizar Intervenção' : 'Concluido!'}
-    </Button>
+    <LazyComponent loading={loading}>
+      <ColumnContainer>
+        {!intervention ? (
+          <RowContainer justifyContent="center" alignItems="center">
+            <H6 status="warning">Intervenção Pendente!</H6>
+          </RowContainer>
+        ) : (
+          <></>
+        )}
+        <Button
+          onPress={intervention ? completeIntervention : requestIntervention}
+        >
+          {intervention ? 'Requisitar Intervenção' : 'Finalizar Intervenção!'}
+        </Button>
+      </ColumnContainer>
+    </LazyComponent>
   );
 };
 
 const InterventionSection: React.FC<Props> = ({ patient }) => {
   const user = store.useState((s) => s.user);
 
-  if (user.role?.type === RoleTypes.NEUROLOGIST)
-    return <NeurologistButton patient={patient}></NeurologistButton>;
-  else if (user.role?.type === RoleTypes.CARER)
-    return <CarerButton patient={patient}></CarerButton>;
+  if (user.role?.type !== RoleTypes.PATIENT) {
+    return (
+      <ColumnContainer>
+        <MarginBlockSmall></MarginBlockSmall>
+        <InterventionButton patient={patient}></InterventionButton>
+      </ColumnContainer>
+    );
+  }
 
   return <View />;
 };

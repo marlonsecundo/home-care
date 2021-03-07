@@ -9,6 +9,7 @@ import {
   NeurologistScreen,
   NeurologistPatientsScreen,
   PatientScreen,
+  CarerScreen,
 } from '../pages';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -21,6 +22,7 @@ const HomeNavigator = () => (
     <Screen name="neurologist" component={NeurologistScreen} />
     <Screen name="neurologist-patients" component={NeurologistPatientsScreen} />
     <Screen name="patient" component={PatientScreen} />
+    <Screen name="carer" component={CarerScreen} />
   </Navigator>
 );
 

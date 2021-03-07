@@ -34,8 +34,8 @@ patientLog.process(async (job) => {
         .merge({ userId: patient.id, type: 'HEARTBEAT', condition: patient.profile.condition })
         .create();
 
-      Event.emit('new:oxygenation-log', oxiLog);
-      Event.emit('new:heartbeat-log', heartLog);
+      await Event.emit('new:oxygenation-log', oxiLog);
+      await Event.emit('new:heartbeat-log', heartLog);
     } catch (e) {
       console.log(e);
     }

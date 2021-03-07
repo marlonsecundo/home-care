@@ -30,13 +30,12 @@ class NeurologistService {
   };
 
   updateIntervention = async (
-    neurologist: User,
     patient: User,
     intervention: boolean
   ): Promise<User | null> => {
     try {
       const result = await api.put(
-        '/neurologists/' + neurologist.id + '/patients/' + patient.id,
+        '/neurologists/' + 1 + '/patients/' + patient.id,
         { intervention }
       );
 

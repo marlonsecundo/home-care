@@ -4,6 +4,7 @@ import SignupScreen from './signup';
 import NeurologistScreen from './neurologist';
 import NeurologistPatientsScreen from './neurologist_patients';
 import PatientScreen from './patient';
+import CarerScreen from './carer';
 export {
   HomeScreen,
   LoginScreen,
@@ -11,4 +12,5 @@ export {
   NeurologistScreen,
   NeurologistPatientsScreen,
   PatientScreen,
+  CarerScreen,
 };

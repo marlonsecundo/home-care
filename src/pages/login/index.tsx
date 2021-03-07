@@ -21,13 +21,17 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
         index: 1,
         routes: [{ name: 'neurologist' }],
       });
+    } else if (user.role?.type === RoleTypes.CARER) {
+      navigation.reset({
+        index: 1,
+        routes: [{ name: 'carer' }],
+      });
     }
   }, []);
 
   const onLoginButtonTap = useCallback(async (em, pass) => {
     const result = await AuthService.login(em, pass);
 
-    console.log(result);
     if (result !== null) {
       store.update(AuthActions.authenticate(result.token, result.user));
     }

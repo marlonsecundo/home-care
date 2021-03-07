@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import NeurologistPatient from 'App/Models/NeurologistPatient';
+import Event from '@ioc:Adonis/Core/Event';
 
 export default class NeurologistPatientsController {
   public async index({ request }: HttpContextContract) {
@@ -26,10 +27,8 @@ export default class NeurologistPatientsController {
     return NeurologistPatient.create({ neurologistId, patientId });
   }
 
-  public async show({}: HttpContextContract) {}
-
   public async update({ request }: HttpContextContract) {
-    const { neurologist_id: neurologistId, id: patientId } = request.params();
+    const { id: patientId } = request.params();
     const requestBody = request.all();
 
     const result = await NeurologistPatient.findBy('patient_id', patientId);
@@ -42,6 +41,8 @@ export default class NeurologistPatientsController {
 
     patientProfile.intervention = requestBody.intervention;
     await patientProfile.save();
+
+    await Event.emit('edit:intervention', patientProfile);
 
     return result!.patient;
   }
