@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import socketService, {
-  HEARTBEAT_SOCKET_URL,
   INTERVENTION_SOCKET_URL,
-  OXIGENTATION_SOCKET_URL,
 } from '../services/socket.service';
-import { PatientLog, PatientLogType, Profile, Status } from '../types/models';
+import { Profile } from '../types/models';
 
 function useInterventionListener(
   defaultValue: boolean,
@@ -13,7 +11,6 @@ function useInterventionListener(
   const [intervention, setIntervention] = useState<boolean>(defaultValue);
 
   const onReceiveData = useCallback((socketData: Profile) => {
-    console.log({ socketData });
     setIntervention(socketData.intervention);
   }, []);
 

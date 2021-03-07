@@ -18,6 +18,7 @@ export enum PatientLogType {
 }
 
 export interface User {
+  _type: 'User';
   id?: number;
   email: string;
   password: string;
@@ -27,6 +28,8 @@ export interface User {
 }
 
 export interface Profile {
+  _type: 'Profile';
+
   name: string;
   cpf: string;
   crm: string;
@@ -36,10 +39,14 @@ export interface Profile {
 }
 
 export interface Role {
+  _type: 'Role';
+
   type: RoleTypes;
 }
 
 export interface PatientLog {
+  _type: 'PatientLog';
+
   data: number;
   type: PatientLogType;
   status: Status;

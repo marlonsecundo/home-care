@@ -18,7 +18,7 @@ const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
         <SafeArea>
           <RowContainer justifyContent="space-between">
             <H2>Neurologista</H2>
-            <LogoutButton navigation={navigation}></LogoutButton>
+            <LogoutButton></LogoutButton>
           </RowContainer>
           <WrapContainer>
             <CardButton

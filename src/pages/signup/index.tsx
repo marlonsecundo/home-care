@@ -13,12 +13,13 @@ import {
 import { RoleRadio } from './styles';
 import Toast from 'react-native-toast-message';
 import CollapsableContainer from '../../components/collapsable-container';
-import { AuthService } from '../../services/auth';
+import AuthService from '../../services/auth.service';
 import NeurologistSelector from '../../components/neurologist-selector';
 import CarerSelector from '../../components/carer-selector';
 import { ColumnContainer, MarginBlockSmall } from '../../styles/layout';
 import ConditionSelector from '../../components/condition-selector';
 import StringMask from 'string-mask';
+import { Profile, Role, User } from '../../types/models';
 
 const cpfFormatter = new StringMask('000.000.000-00');
 const dateFromatter = new StringMask('90/90/9900');
@@ -50,14 +51,21 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
       condition
     ) => {
       const result = await AuthService.signup(
-        { email, password },
-        { name, birth, crm, cpf, condition, intervention: false },
-        { type: roleIndex },
+        { email, password } as User,
+        {
+          name,
+          birth,
+          crm,
+          cpf,
+          condition,
+          intervention: false,
+        } as Profile,
+        { type: roleIndex } as Role,
         neurologist,
         carer
       );
 
-      if (result.type === 'AXIOS_RESPONSE') {
+      if (result._type === 'User') {
         Toast.show({
           type: 'success',
           position: 'top',
@@ -66,21 +74,20 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
           autoHide: true,
           topOffset: 30,
           bottomOffset: 40,
-          onHide: () => navigation.replace('login'),
         });
         return;
+      } else {
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: result.message,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onHide: () => {},
+        });
       }
-
-      Toast.show({
-        type: 'error',
-        position: 'bottom',
-        text1: result.message,
-        visibilityTime: 4000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onHide: () => {},
-      });
     },
     []
   );
@@ -221,8 +228,8 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
             </BottomButton>
           </ColumnContainer>
         </ScrollView>
-        <Toast ref={(ref) => Toast.setRef(ref)} />
       </SafeArea>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </Root>
   );
 };

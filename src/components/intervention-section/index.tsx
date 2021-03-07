@@ -46,7 +46,7 @@ const InterventionButton: React.FC<Props> = ({ patient }) => {
   return (
     <LazyComponent loading={loading}>
       <ColumnContainer>
-        {!intervention ? (
+        {intervention ? (
           <RowContainer justifyContent="center" alignItems="center">
             <H6 status="warning">Intervenção Pendente!</H6>
           </RowContainer>
@@ -56,7 +56,7 @@ const InterventionButton: React.FC<Props> = ({ patient }) => {
         <Button
           onPress={intervention ? completeIntervention : requestIntervention}
         >
-          {intervention ? 'Requisitar Intervenção' : 'Finalizar Intervenção!'}
+          {intervention ? 'Finalizar Intervenção!' : 'Requisitar Intervenção'}
         </Button>
       </ColumnContainer>
     </LazyComponent>

@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import LazyComponent from '../../hoc/lazy-component';
 import CarerService from '../../services/carer.serivce';
 import { User } from '../../types/models';
@@ -17,7 +18,7 @@ const CarerSelector: React.FC<Props> = ({ onCarerSelected }) => {
 
   useEffect(() => {
     CarerService.fetchCarers().then((result) => {
-      if (result !== null) {
+      if (result._type === 'ListResult') {
         setCarers(result);
 
         const values = result.map<SelectorItem>((c) => ({
@@ -27,6 +28,7 @@ const CarerSelector: React.FC<Props> = ({ onCarerSelected }) => {
         }));
 
         setItens(values);
+      } else {
       }
     });
   }, []);

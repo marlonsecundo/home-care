@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, Icon } from '@ui-kitten/components';
 import React, { useCallback } from 'react';
@@ -8,11 +9,9 @@ const ExitIcon = (props: any) => (
   <Icon {...props} name="corner-down-left-outline" />
 );
 
-interface Props {
-  navigation: StackNavigationProp<any>;
-}
+const LogoutButton: React.FC = () => {
+  const navigation = useNavigation();
 
-const LogoutButton: React.FC<Props> = ({ navigation }) => {
   const onLogoutTap = useCallback(() => {
     store.update(AuthActions.logoff());
   }, []);

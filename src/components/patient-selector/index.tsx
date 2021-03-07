@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LazyComponent from '../../hoc/lazy-component';
 import PatientService from '../../services/patient.service';
 import { User } from '../../types/models';
+import { ListResult } from '../../types/services';
 import Selector, { SelectorItem } from '../selector';
 
 interface Props {
@@ -16,8 +17,8 @@ const PatientSelector: React.FC<Props> = ({ onPatientSelected }) => {
   ]);
 
   useEffect(() => {
-    PatientService.fetchPatients().then((result: any) => {
-      if (result !== null) {
+    PatientService.fetchPatients().then((result) => {
+      if (result._type === 'ListResult') {
         setPatients(result);
       }
     });

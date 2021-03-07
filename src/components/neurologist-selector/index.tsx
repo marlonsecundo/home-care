@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import LazyComponent from '../../hoc/lazy-component';
 import NeurologistService from '../../services/neurologist.service';
 import { P1 } from '../../styles/global';
@@ -20,7 +21,7 @@ const NeurologistSelector: React.FC<Props> = ({ onNeurologistSelected }) => {
 
   useEffect(() => {
     NeurologistService.fetchNeurologists().then((result) => {
-      if (result !== null) {
+      if (result._type === 'ListResult') {
         setNeurologists(result);
 
         const values = result.map<SelectorItem>((n) => ({
@@ -30,6 +31,7 @@ const NeurologistSelector: React.FC<Props> = ({ onNeurologistSelected }) => {
         }));
 
         setItens(values);
+      } else {
       }
     });
   }, []);

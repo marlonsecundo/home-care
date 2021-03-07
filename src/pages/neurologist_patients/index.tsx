@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button, List } from '@ui-kitten/components';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import PatientCard from '../../components/patient-card';
 import LazyComponent from '../../hoc/lazy-component';
 import AuthRoute from '../../routes/auth-route';
@@ -16,6 +17,7 @@ interface Props {
 
 const NeurologistPatientsScreen: React.FC<Props> = ({ navigation }) => {
   const neurologist = store.useState((s) => s.user);
+  const firstTime = useRef(true);
 
   const [patients, setPatients] = useState<User[] | null>();
 
@@ -37,11 +39,35 @@ const NeurologistPatientsScreen: React.FC<Props> = ({ navigation }) => {
     setPatients(null);
 
     NeurologistService.fetchPatients(neurologist).then((result) => {
-      if (result !== null) {
+      if (result._type === 'ListResult') {
         setPatients(result);
+      } else {
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: result.message,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onHide: () => {},
+        });
       }
     });
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (!firstTime.current) {
+        fetchPatients();
+      }
+
+      firstTime.current = false;
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     fetchPatients();
@@ -61,6 +87,7 @@ const NeurologistPatientsScreen: React.FC<Props> = ({ navigation }) => {
             <List data={patients} renderItem={renderItem} />
             <MarginBlockSmall></MarginBlockSmall>
           </LazyComponent>
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </SafeArea>
       </Root>
     </AuthRoute>

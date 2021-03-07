@@ -1,12 +1,12 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import CardButton from '../../components/card-button';
 import LogoutButton from '../../components/logout-button/logout-button';
 import LazyComponent from '../../hoc/lazy-component';
 import AuthRoute from '../../routes/auth-route';
 import carerSerivce from '../../services/carer.serivce';
 import store from '../../store';
-import { AuthActions } from '../../store/actions/auth.actions';
 import {
   Root,
   SafeArea,
@@ -28,8 +28,19 @@ const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
 
   useEffect(() => {
     carerSerivce.fetchPatient(user).then((result) => {
-      if (result !== null) {
+      if (result._type === 'User') {
         setPatient(result);
+      } else {
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: result.message,
+          visibilityTime: 4000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+          onHide: () => {},
+        });
       }
     });
   }, []);
@@ -40,7 +51,7 @@ const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
         <SafeArea>
           <RowContainer justifyContent="space-between">
             <H2>Cuidador</H2>
-            <LogoutButton navigation={navigation}></LogoutButton>
+            <LogoutButton></LogoutButton>
           </RowContainer>
 
           <LineDivider></LineDivider>
@@ -56,6 +67,7 @@ const NeurologistScreen: React.FC<_Props> = ({ navigation }) => {
               ></CardButton>
             </WrapContainer>
           </LazyComponent>
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </SafeArea>
       </Root>
     </AuthRoute>
