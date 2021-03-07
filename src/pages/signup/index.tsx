@@ -1,5 +1,5 @@
 import { Radio, Input } from '@ui-kitten/components';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   BottomButton,
@@ -17,8 +17,11 @@ import { AuthService } from '../../services/auth';
 import NeurologistSelector from '../../components/neurologist-selector';
 import CarerSelector from '../../components/carer-selector';
 import { ColumnContainer, MarginBlockSmall } from '../../styles/layout';
-import PatientSelector from '../../components/patient-selector';
 import ConditionSelector from '../../components/condition-selector';
+import StringMask from 'string-mask';
+
+const cpfFormatter = new StringMask('000.000.000-00');
+const dateFromatter = new StringMask('90/90/9900');
 
 const SignupScreen: React.FC = ({ navigation }: any) => {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -104,19 +107,46 @@ const SignupScreen: React.FC = ({ navigation }: any) => {
               value={name}
               label="Nome"
               placeholder="Insira seu nome"
-              onChangeText={setName}
+              onChangeText={(text) => setName(text)}
             />
             <Input
               value={cpf}
               label="CPF"
               placeholder="Insira seu CPF"
-              onChangeText={setCPF}
+              onChangeText={(text) => {
+                if (text.length < cpf.length) {
+                  setCPF(text);
+                  return;
+                }
+                const data = text
+                  .split(',')
+                  .join('')
+                  .split('.')
+                  .join('')
+                  .split('-')
+                  .join('');
+
+                const result: string = cpfFormatter.apply(data);
+
+                setCPF(result);
+              }}
             />
             <Input
               value={birth}
               label="Data de Nascimento"
               placeholder="Insira sua data de nascimento"
-              onChangeText={setBirth}
+              onChangeText={(text) => {
+                if (text.length < birth.length) {
+                  setBirth(text);
+                  return;
+                }
+
+                const data = text.split('/').join('');
+
+                const result: string = dateFromatter.apply(data);
+
+                setBirth(result);
+              }}
             />
             <CollapsableContainer visible={roleIndex === 1}>
               <>

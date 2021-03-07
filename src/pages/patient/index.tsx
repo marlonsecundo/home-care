@@ -1,8 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Layout } from '@ui-kitten/components';
 import React from 'react';
-import { View } from 'react-native';
 import InterventionSection from '../../components/intervention-section';
 import PatientLogCard from '../../components/patient-log-card';
 import usePatientLogListener from '../../hooks/usePatientLogListener';

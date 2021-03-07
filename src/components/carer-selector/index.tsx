@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
 import LazyComponent from '../../hoc/lazy-component';
-import { CarerService } from '../../services/carer.serivce';
-import { NeurologistService } from '../../services/neurologists';
-import { P1 } from '../../styles/global';
-import { ColumnContainer } from '../../styles/layout';
+import CarerService from '../../services/carer.serivce';
 import { User } from '../../types/models';
 import Selector, { SelectorItem } from '../selector';
 

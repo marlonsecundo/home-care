@@ -16,6 +16,7 @@
   "rules": {
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
+
     "import/resolver": {
       "node": {
         "paths": ["src", "assets"]
